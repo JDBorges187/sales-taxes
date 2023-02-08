@@ -2,7 +2,8 @@
 Assuming we get an array of items we will want to:
     1. Tally the items
     2. Determine whether the item is imported
-    3. 
+    3. Filter out the price, description and quantity
+    4. Provide a way to get Total Tax, subTotal and Grand Total
 
 
 */
