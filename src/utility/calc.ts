@@ -6,8 +6,8 @@ Assuming we get an array of items we will want to:
 
 
 */
-  
 export class Item {
+    itemString: string;
     price: number;
     quantity: number;
     imported: boolean;
@@ -17,33 +17,39 @@ export class Item {
     taxable: boolean;
 
     constructor(str: string){
-        this.price = this.getPrice(str);
-        this.quantity = this.getQty(str);
-        this.imported = this.isImported(str);
-        this.description = this.getDesc(str);
+        this.itemString = str.trim()
+        this.price = this.getPrice();
+        this.quantity = this.getQty();
+        this.imported = this.isImported();
+        this.description = this.getDesc();
         this.taxable = this.isTaxable();
         this.duty = this.calcDuty();
         this.taxes = this.calcTaxes();
     }
 
-    getPrice(str: string):number {
+    getPrice():number {
+        const str = this.itemString;
         const [price] = str.split(' ').reverse();
-
+  
         return Number(price);
     }
-
-    getQty(str: string): number {
+    
+    getQty(): number {
+        const str = this.itemString;
         const [qty] = str.split(' ');
-
+        
         return Number(qty);
     }
-
-    isImported(str: string): boolean {
-
+    
+    isImported(): boolean {
+        const str = this.itemString;
+        
         return str.toLowerCase().includes('imported');
     }
-
-    getDesc(str: string): string {
+    
+    getDesc(): string {
+        const str = this.itemString;
+        
         const importIndex = this.imported ? 10 : 1;
         const prefixRemoved = str.slice(str.indexOf(' ') + importIndex, str.lastIndexOf(' '));
         const suffixRemoved = prefixRemoved.slice(0, prefixRemoved.lastIndexOf(' '))
@@ -53,7 +59,9 @@ export class Item {
     calcDuty(): number {
         if (!this.imported) return 0;
 
-        return this.price * 0.05
+        const exact = this.price * 0.05;
+        const roundUp = Math.ceil(exact * 20) / 20;
+        return roundUp; 
     }
 
     isTaxable(): boolean {
@@ -61,21 +69,33 @@ export class Item {
         const food = ['chocolate', 'chocolates'];
         const medicine = ['medicine', 'pills'];
 
-        return [...books, ...food, ...medicine].some((word)=>{
+        const exempt = [...books, ...food, ...medicine].some((word)=>{
             return this.description.toLowerCase().includes(word);
         })
+
+        return !exempt;
     }
 
     calcTaxes(): number {
-        if (!this.taxable) return 0;
 
+        if (!this.taxable) return 0;
+        
         const exact = this.price * 0.1;
         const roundUp = Math.ceil(exact * 20) / 20;
+        // console.log(exact, roundUp);
 
         return roundUp;
     }
 
-    get subTotal():number {
-        return this.price + this.duty
+    subTotal():number {
+        return this.price + this.duty + this.taxes;
     }
+
+    static taxTotal(...items: Item[]) {
+        return items.reduce((acc, item) => {
+            // add the taxes and duty for every item
+           return (acc + item.taxes + item.duty)
+        }, 0).toFixed(2);
+    }
+
 }
