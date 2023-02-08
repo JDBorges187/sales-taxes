@@ -6,13 +6,16 @@ const Form = () => {
   const [ textInput, setTextInput ] = useState('');
   const [ itemsArray, setItemsArray ] = useState<string[]>([]);
   const [ listOutput, setListOutput ] = useState<Item[]>([]);
+  const [ totalTax, setTotalTax ] = useState('');
+  const [ grandTotal, setGrandTotal ] = useState('');
 
   useEffect(() => {
     const newArray = itemsArray.map(item=>new Item(item));
-    console.log(newArray);
+    
     setListOutput(newArray);
+    setTotalTax(Item.taxTotal(...newArray));
+    setGrandTotal(Item.grandTotal(...newArray));
 
-    console.log(Item.taxTotal(...newArray));
   },[itemsArray])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -41,7 +44,7 @@ const Form = () => {
       const [count, ...rest] = item.split(' ');
       const itemDesc = rest.join(' ');
       const numCount = Number(count);
-      console.log(itemDesc, numCount)
+      if (numCount < 1) return;
 
       if (itemDesc in freqMap) {
         freqMap[itemDesc] += numCount;
@@ -64,6 +67,28 @@ Example:
 1 Music CD at 14.99
 1 Chocolate bar at 0.85`;
 
+  const Receipt = listOutput.length !== 0 ? (
+    <ul>
+      {listOutput.map((item, i) => {
+        const qty = item.quantity
+        const multiple = qty > 1;
+        const desc = item.description;
+        const subTotal = item.subTotal();
+        const total = (item.quantity * subTotal).toFixed(2);
+
+        return (
+          <li key={`${i}_${item}`}>
+            {multiple ?
+            `${desc}: ${total} (${qty} @ ${subTotal.toFixed(2)})`:
+            `${desc}: ${subTotal.toFixed(2)}`}
+          </li>
+        )
+      })}
+      <li>Sales Taxes: {totalTax}</li>
+      <li>Total: {grandTotal}</li>
+    </ul>
+  ) : null;
+
   return (
     <div className="form_wrapper">
       <form onSubmit={handleSubmit}>
@@ -77,11 +102,7 @@ Example:
         <button type={'submit'}>Calculate</button>
       </form>
       <ul>
-        {/* {listOutput.length && 
-        listOutput.map((item) => {
-          const desc = (item.imported ? "Imported ": "") + item.description
-          return <li key={desc}>{desc}: {item.totalPrice}</li>
-        })} */}
+        {Receipt}
       </ul>
     </div>
   );

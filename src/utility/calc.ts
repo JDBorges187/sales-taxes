@@ -51,7 +51,7 @@ export class Item {
         const str = this.itemString;
         
         const importIndex = this.imported ? 10 : 1;
-        const prefixRemoved = str.slice(str.indexOf(' ') + importIndex, str.lastIndexOf(' '));
+        const prefixRemoved = str.slice(str.indexOf(' ') + 1, str.lastIndexOf(' '));
         const suffixRemoved = prefixRemoved.slice(0, prefixRemoved.lastIndexOf(' '))
         return suffixRemoved;
     }
@@ -94,8 +94,15 @@ export class Item {
     static taxTotal(...items: Item[]) {
         return items.reduce((acc, item) => {
             // add the taxes and duty for every item
-           return (acc + item.taxes + item.duty)
+           return (acc + ((item.taxes + item.duty) * item.quantity))
         }, 0).toFixed(2);
     }
 
+    static grandTotal(...items: Item[]) {
+        return items.reduce((acc, item) => {
+            const subTotal = item.subTotal();
+            const qty = item.quantity;
+           return (acc + (subTotal * qty))
+        }, 0).toFixed(2);
+    }
 }
