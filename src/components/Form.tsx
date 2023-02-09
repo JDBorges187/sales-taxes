@@ -1,5 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Item } from '../utility/calc';
+import { handleDuplicates, placeholder } from '../utility/utility';
+import Receipt from './Receipt';
 
 const Form = () => {
 
@@ -32,63 +34,6 @@ const Form = () => {
     setTextInput(e.target.value.replace(/\n{2,}/g, '\n'))
   }
 
-  const handleDuplicates = (arr: string[]): string[] => {
-    interface mapType {
-      [key:string]: number;
-    }
-
-    const freqMap: mapType = {};
-
-    arr.forEach((item) => {
-      if (item == '') return;
-      const [count, ...rest] = item.split(' ');
-      const itemDesc = rest.join(' ');
-      const numCount = Number(count);
-      if (numCount < 1) return;
-
-      if (itemDesc in freqMap) {
-        freqMap[itemDesc] += numCount;
-      } else {
-        freqMap[itemDesc] = numCount;
-      }
-    })
-    
-    const arrWithCount = Object.keys(freqMap).map((item)=>{
-      return `${freqMap[item]} ${item}`
-    })
-
-    return arrWithCount;
-  }
-
-  const placeholder = `Enter your items here as a list...
-Example:
-1 Book at 12.49
-1 Book at 12.49
-1 Music CD at 14.99
-1 Chocolate bar at 0.85`;
-
-  const Receipt = listOutput.length !== 0 ? (
-    <ul>
-      {listOutput.map((item, i) => {
-        const qty = item.quantity
-        const multiple = qty > 1;
-        const desc = item.description;
-        const subTotal = item.subTotal();
-        const total = (item.quantity * subTotal).toFixed(2);
-
-        return (
-          <li key={`${i}_${item}`}>
-            {multiple ?
-            `${desc}: ${total} (${qty} @ ${subTotal.toFixed(2)})`:
-            `${desc}: ${subTotal.toFixed(2)}`}
-          </li>
-        )
-      })}
-      <li>Sales Taxes: {totalTax}</li>
-      <li>Total: {grandTotal}</li>
-    </ul>
-  ) : null;
-
   return (
     <div className="form_wrapper">
       <form onSubmit={handleSubmit}>
@@ -101,9 +46,7 @@ Example:
 
         <button type={'submit'}>Calculate</button>
       </form>
-      <ul>
-        {Receipt}
-      </ul>
+      <Receipt listOutput={listOutput} totalTax={totalTax} grandTotal={grandTotal} />
     </div>
   );
 }
