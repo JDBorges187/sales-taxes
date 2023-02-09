@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { Item } from '../utility/calc';
+import { Item } from '../api/item';
 import { handleDuplicates, placeholder } from '../utility/utility';
 import Receipt from './Receipt';
 

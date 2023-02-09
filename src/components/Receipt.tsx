@@ -1,4 +1,4 @@
-import { Item } from '../utility/calc';
+import { Item } from '../api/item';
 
 const Receipt = ({ listOutput, totalTax, grandTotal }: { listOutput: Item[], totalTax: string, grandTotal: string}) => {
     return listOutput.length !== 0 ? (
