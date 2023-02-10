@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -7,39 +9,114 @@
 html,
 body {
   height: 100%;
-  width: 100%;
+  min-width: 100%;
   min-height: 100%;
   max-height: 100%;
-  font-family: "Roboto";
-  scroll-behavior: smooth;  
+  font-family: 'Roboto';
+  background-color: lightgrey;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  
+
 }
 
 .nav {
-  width: 100%;
+  width: 100vw;
   height: 60px;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
-  background-color: aqua;
+  align-items: center;
+  background-color: #0d1a30;
+  font-family: 'Didact Gothic';
+  color: white;
 }
 
-.form_wrapper {
-  width: 600px;
-}
-
-form {
-  margin-top: 40px;
+.nav__header {
   display: flex;
-  flex-direction: column;
   align-items: center;
 }
 
-textarea {
+.nav__header-logo {
+  margin-right: 10px;
+}
+
+.nav__link {
+  font-size: 20px;
+  margin-right: 20px;
+  padding: 4px 0px;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+}
+
+.nav__link,
+.nav__link:visited,
+.nav__link:hover,
+.nav__link:active {
+  color:inherit;
+}
+
+.nav__link::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  content: '';
+  opacity: 0;
+  transform: scale(0);
+  transition: 0.4s;
+}
+
+.nav__link:hover::after,
+.nav__link:focus::after {
+  transform: scale(1);
+  opacity: 1;
+  transform-origin: center;
+}
+
+.container {
+  width: 900px;
+  height: calc(100% - 60px);
+  margin: 0 auto;
+  background-color: white;
+  box-shadow:0 0 20px grey;
+}
+
+.form {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: inherit;
+}
+
+.form > * {
+  margin-top: 8px;
+  font-family: inherit;
+}
+
+.form__input {
   width: 400px;
   height: 200px;
+  font-size: 16px;
   padding: 4px;
+  font-family: monospace;
+}
+
+.form__button {
+  margin-top: 20px;
+  padding: 8px 24px;
+  border-radius: 50px;
+  border: none;
+  font-size: 16px;
+  background-color: #ff7319;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .container{
+    width: 100%;
+  } 
 }

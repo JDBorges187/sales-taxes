@@ -6,7 +6,6 @@ function App() {
   return (
     <>
       <NavBar />
-      <h1>Sales Tax Calculator</h1>
       <Form />
     </>
   )
