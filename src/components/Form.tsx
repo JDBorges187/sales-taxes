@@ -44,7 +44,7 @@ const Form = () => {
           onChange={updateTextArea}
           value={textInput} />
 
-        <button type={'submit'}>Calculate</button>
+        <button type="submit">Calculate</button>
       </form>
       <Receipt listOutput={listOutput} totalTax={totalTax} grandTotal={grandTotal} />
     </div>
