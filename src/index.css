@@ -81,6 +81,9 @@ body {
   margin: 0 auto;
   background-color: white;
   box-shadow:0 0 20px grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form {
@@ -113,6 +116,35 @@ body {
   background-color: #ff7319;
   color: white;
   cursor: pointer;
+}
+
+.receipt {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.receipt__item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.receipt > hr {
+  margin-bottom: 20px;
+}
+
+.receipt__tax,
+.receipt__total {
+  font-weight: bold;
+}
+
+.receipt__item,
+.receipt__tax,
+.receipt__total {
+  font-family: monospace;
+  list-style: none;
 }
 
 @media (max-width: 900px) {
