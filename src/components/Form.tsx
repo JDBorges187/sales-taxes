@@ -13,6 +13,7 @@ const Form = () => {
   const [ isError, setIsError ] = useState(false);
 
   useEffect(() => {
+    //added a try catch to handle errors thrown when creating new Items
     try {
       const newArray = itemsArray.map(item=>new Item(item));
       setListOutput(newArray);
@@ -24,6 +25,8 @@ const Form = () => {
     }
   },[itemsArray])
 
+
+  // When the user clicks submit, remove duplicate carriage returns and handle multiples
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
@@ -34,12 +37,14 @@ const Form = () => {
     setItemsArray(deDupedList);
   }
 
+  // controlled input, also clear out page and errors when user enters new data
   const updateTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTextInput(e.target.value.replace(/\n{2,}/g, '\n'))
     setItemsArray([]);
     setIsError(false);
   }
 
+  // only display error div when errors exist on page
   const errorStyles = {display: isError ? 'block' : 'none', color: '#f00'}
 
   return (

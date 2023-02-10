@@ -1,6 +1,7 @@
 const ReceiptItem = ({ description, subTotal, quantity }: { description: string, subTotal: number, quantity: number }) => {
     const multiple = quantity > 1;
     const total = (quantity * subTotal).toFixed(2);
+    
     return (
         <li className="receipt__item">
             <span className="receipt__item-description">
