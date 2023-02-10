@@ -1,5 +1,7 @@
 # Sales Tax Calculator
 
+![Screenshot 2023-02-10 112638](https://user-images.githubusercontent.com/22569070/218143912-8a0737ae-0d0b-4b57-9c21-be4250b256b8.png)
+
 ## Problem Statement
 The goal of this project is to write an application that takes input for shopping baskets and returns receipts in the format shown below, calculating all taxes and totals correctly. The sales tax should be rounded up to the nearest 5 cents.
 
