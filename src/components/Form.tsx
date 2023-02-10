@@ -32,18 +32,20 @@ const Form = () => {
 
   const updateTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTextInput(e.target.value.replace(/\n{2,}/g, '\n'))
+    setItemsArray([]);
   }
 
   return (
     <div className="container">
       <form className="form" onSubmit={handleSubmit}>
         <h3 className="form__title">Items Input</h3>
-        <p className="form__description">Enter the items you would like to calculate</p>
+        <p className="form__description">Enter items to calculate your sales tax</p>
         <textarea
           className="form__input"
           placeholder={placeholder}
           onChange={updateTextArea}
-          value={textInput} />
+          value={textInput} 
+          required/>
 
         <button className="form__button" type="submit">
           Calculate 
