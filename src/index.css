@@ -107,6 +107,10 @@ body {
   font-family: monospace;
 }
 
+.form__input.error {
+  border: 2px solid #f00;
+}
+
 .form__button {
   margin-top: 20px;
   padding: 8px 24px;
